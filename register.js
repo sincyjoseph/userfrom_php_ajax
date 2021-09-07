@@ -86,12 +86,13 @@ $(document).ready(function(){
             type: 'POST',
             data: { deleteId: deleteId },
             success: function(result){
-                if (result == 1){
+                var result = JSON.parse(result);
+                console.log(result)
+                if (result.statusCode==200){
                     $(obj).closest('tr').remove();
-                } 
-            },
-            error: function() {
-                alert("Some error occured");
+                } else if(result.statusCode==201) {
+                    alert(result);
+                }
             }
         });
         }
