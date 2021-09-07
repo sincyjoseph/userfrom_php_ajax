@@ -77,23 +77,21 @@ $(document).ready(function(){
 
     // Delete 
     $('.delete').click(function(){
-        var el = this;
+        var obj = $(this);
         var deleteId = $(this).data('id');
         var confirmalert = confirm("Are you sure?");
         if (confirmalert == true) {
-        // AJAX Request
         $.ajax({
             url: 'ajax/delete.php',
             type: 'POST',
             data: { deleteId: deleteId },
-            success: function(response){
-            if (response == 1){
-                $(el).closest('tr').fadeOut(800,function(){
-                $(this).remove();
-                });
-            } else{
-                alert('Invalid ID.');
-            }
+            success: function(result){
+                if (result == 1){
+                    $(obj).closest('tr').remove();
+                } 
+            },
+            error: function() {
+                alert("Some error occured");
             }
         });
         }
