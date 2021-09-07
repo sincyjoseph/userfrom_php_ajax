@@ -11,26 +11,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if(isset($_POST['deleteId'])){
         $deleteId = mysqli_real_escape_string($conn,$_POST['deleteId']);
-    }
-    if ($deleteId > 0){
-        $checkRecord = mysqli_query($conn,"SELECT * FROM users WHERE id=".$deleteId);
-        $totalrows = mysqli_num_rows($checkRecord);
-        if ($totalrows > 0){
-            $query = "DELETE FROM users WHERE id=".$deleteId;
-            if(mysqli_query($conn,$query)){
-                $del = new stdClass();
-                $del->statusCode=200;
-                $del->statusMessage='success';
-                echo json_encode($del);
-            } else{
-                $del = new stdClass();
-                $del->statusCode=201;
-                $del->statusMessage="Error: " . $query . "<br>" . mysqli_error($conn);
-                echo json_encode($del);
-            }   
-            mysqli_close($conn);
-        } 
+        $query = "DELETE FROM users WHERE id=".$deleteId;
+        if(mysqli_query($conn,$query)){
+            $del = new stdClass();
+            $del->statusCode=200;
+            $del->statusMessage='success';
+            echo json_encode($del);
+        } else{
+            $del = new stdClass();
+            $del->statusCode=201;
+            $del->statusMessage="Error: " . $query . "<br>" . mysqli_error($conn);
+            echo json_encode($del);
+        }   
+        mysqli_close($conn);
     }
 }
-
 ?>

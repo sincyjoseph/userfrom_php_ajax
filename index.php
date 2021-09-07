@@ -1,14 +1,16 @@
 <?php
-$servername = "newproject";
+$servername = "localhost";
 $dbusername = "root";
 $dbpassword = "";
 $dbname = "userform";
+
 $conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
 
 $update = false;
 $isEditOnly = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
     $username = isset($_POST['username'])?$_POST['username']:'';
     $password = isset($_POST['password'])?$_POST['password']:'';
     $email = isset($_POST['email'])?$_POST['email']:'';
