@@ -1,11 +1,5 @@
 <?php
-$servername = "localhost";
-$dbusername = "root";
-$dbpassword = "";
-$dbname = "userform";
-
-$conn = new mysqli($servername, $dbusername, $dbpassword, $dbname);
-
+include 'database.php';
 $update = false;
 $isEditOnly = false;
 
@@ -19,8 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $declaration = isset($_POST['checkbox'])?$_POST['checkbox']:'';
     //Save  or update
     if(isset($_POST['save'])){
-        $insertStatus = $conn->query("INSERT INTO users (username, password, email, gender, address, declaration) 
-                      VALUES ('$username', '$password', '$email', '$gender', '$address', '$declaration')");
+        $insertData = new Database();
+        $insertStatus = $insertData->insert($username,$password,$email,$gender,$address,$declaration);
 
         if($insertStatus){
             echo "Insert success";
@@ -29,12 +23,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     else if(isset($_POST['update'])){
+        $updateData = new Database();
         $isEditOnly = true;
         $HI = $_POST['HI'];
         if(is_numeric($HI) && $HI > 0){
-            $updateStatus = $conn->query("UPDATE users 
-                          SET username='$username', password='$password', email='$email', gender='$gender', address='$address', declaration='$declaration' 
-                          WHERE id=$HI ");
+            $updateStatus = $updateData->update($username,$password,$email,$gender,$address,$declaration,$HI);
             if($updateStatus){
                 echo "Update success";
             }else {
@@ -42,13 +35,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } 
     }
-
 }
 // edit
 if(isset($_GET['edit']) && !($isEditOnly)){
+    $editData = new Database();
     $id = isset($_GET['edit'])?$_GET['edit']:0;
     $update = true;
-    $result = $conn->query("SELECT * FROM users WHERE id=$id");
+    $result = $editData->edit($id);
     if ($result){
         $row = $result->fetch_array();
         $username = isset($row['username'])?$row['username']:'';
