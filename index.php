@@ -1,5 +1,6 @@
 <?php
 include 'database.php';
+
 $update = false;
 $isEditOnly = false;
 
@@ -15,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_POST['save'])){
         $insertData = new Database();
         $insertStatus = $insertData->insert($username,$password,$email,$gender,$address,$declaration);
-
         if($insertStatus){
             echo "Insert success";
         }else {
