@@ -78,7 +78,6 @@ $(document).ready(function(){
     // Delete 
     $('.delete').click(function(){
         var el = this;
-        // Delete id
         var deleteId = $(this).data('id');
         var confirmalert = confirm("Are you sure?");
         if (confirmalert == true) {
@@ -89,7 +88,6 @@ $(document).ready(function(){
             data: { deleteId: deleteId },
             success: function(response){
             if (response == 1){
-            // Remove row from HTML Table
                 $(el).closest('tr').fadeOut(800,function(){
                 $(this).remove();
                 });
