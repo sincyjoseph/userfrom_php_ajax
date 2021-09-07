@@ -85,8 +85,8 @@ $(document).ready(function(){
             url: 'ajax/delete.php',
             type: 'POST',
             data: { deleteId: deleteId },
+            dataType: "json",
             success: function(result){
-                var result = JSON.parse(result);
                 console.log(result)
                 if (result.statusCode==200){
                     $(obj).closest('tr').remove();

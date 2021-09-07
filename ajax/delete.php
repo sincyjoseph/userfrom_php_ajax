@@ -18,9 +18,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($totalrows > 0){
             $query = "DELETE FROM users WHERE id=".$deleteId;
             if(mysqli_query($conn,$query)){
-                echo json_encode(array("statusCode"=>200));
+                $del = new stdClass();
+                $del->statusCode=200;
+                $del->statusMessage='success';
+                echo json_encode($del);
             } else{
-                echo "Error: " . $query . "<br>" . mysqli_error($conn);
+                $del = new stdClass();
+                $del->statusCode=201;
+                $del->statusMessage="Error: " . $query . "<br>" . mysqli_error($conn);
+                echo json_encode($del);
             }   
             mysqli_close($conn);
         } 
